@@ -1,0 +1,25 @@
+{
+  "servos": [
+    {
+      "name": "arm",
+      "pin": 0,
+      "is_360": false,
+      "pulse_min": 800,
+      "pulse_max": 2400,
+      "max_angle": 180
+    },
+    {
+      "name": "wrist",
+      "pin": 1,
+      "is_360": false,
+      "pulse_min": 630,
+      "pulse_max": 2800,
+      "max_angle": 270
+    }
+  ],
+  "pwm_board": {
+    "address": "0x40",
+    "channels": 16,
+    "frequency": 330
+  }
+}
