@@ -1,0 +1,10 @@
+$primary: rgb(84, 90, 249);
+
+// Bootstrap and BootstrapVue SCSS files
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
+
+//RWD mixin usage:
+//@include media-breakpoint-up(md) {
+//  display: block;
+//}

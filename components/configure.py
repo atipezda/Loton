@@ -2,6 +2,8 @@ from types import SimpleNamespace
 import json
 
 from adafruit_servokit import ServoKit
+
+from components.ServoMotor import ServoMotor
 from components.DcMotor import DcMotor
 
 
@@ -11,11 +13,19 @@ def configPWMBoard(config):
 
 
 def configServos(servos, kit):
+    servosReturn = []
     for servo in servos:
-        pin = servo.pin
-        kit.servo[pin].actuation_range = servo.max_angle
-        kit.servo[pin].set_pulse_width_range(servo.pulse_min, servo.pulse_max)
-    return kit
+        kitServo = kit.servo[servo.pin]
+        servo = ServoMotor(kitServo,
+                           servo.name,
+                           servo.pin,
+                           servo.is_360,
+                           servo.pulse_min,
+                           servo.pulse_max,
+                           servo.max_angle)
+        servosReturn.append(servo)
+        print(servos)
+    return servosReturn
 
 
 def dictToDns(diction):
@@ -44,18 +54,18 @@ def performConfiguration(configFilename):
     config = loadJsonConfig(configFilename)
     kit = configPWMBoard(config)
     motorsConfig = config.motors
-    servoKit = configServos(motorsConfig.servos, kit)
+    servos = configServos(motorsConfig.servos, kit)
     motors = configDCMotors(motorsConfig.dc_motors)
-    body = addServosToBody(body, motorsConfig, servoKit)
+    body = addServosToBody(body, servos)
     body = addDCsToBody(body, motors)
     body = dictToDns(body)
     return body
 
 
-def addServosToBody(body, motorsConfig, kit):
-    servos = motorsConfig.servos
+def addServosToBody(body, servos):
+    print(servos)
     for servo in servos:
-        body[servo.name] = kit.servo[servo.pin]
+        body[servo.name] = servos[servo.pin]
     return body
 
 
