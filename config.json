@@ -2,30 +2,22 @@
   "motors": {
     "servos": [
       {
-        "name": "arm",
+        "name": "feet",
         "pin": 0,
-        "is_360": false,
-        "pulse_min": 800,
-        "pulse_max": 2400,
-        "max_angle": 180
-      },
-      {
-        "name": "wrist",
-        "pin": 1,
-        "is_360": false,
-        "pulse_min": 630,
-        "pulse_max": 2800,
-        "max_angle": 270
+        "is_360": true,
+        "pulse_min": 900,
+        "pulse_max": 2000,
+        "max_angle": 360,
+        "speed": 0.3,
+        "potentiometer": {
+          "pin": 0,
+          "min_val": 7360,
+          "max_val": 26176,
+          "gain": "2/3"
+        }
       }
     ],
     "dc_motors": [
-      {
-        "name": "finger",
-        "pin_forward": 21,
-        "pin_backward": 20,
-        "move_duration": 1.5,
-        "initial": "forward"
-      }
     ]
   },
   "pwm_board": {
