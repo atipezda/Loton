@@ -11,8 +11,7 @@ from components.DcMotor import DcMotor
 from components.UartServo import UartServo
 
 
-def configPWMBoard(config):
-    pwmConfig = config.pwm_board
+def configPWMBoard(pwmConfig):
     return ServoKit(channels=pwmConfig.channels, address=pwmConfig.address, frequency=pwmConfig.frequency)
 
 
@@ -85,31 +84,6 @@ def configUartServos(uartBoardConfig, servos, adc):
                               potentiometer)
         servosReturn.append(uartServo)
     return servosReturn
-
-
-def performConfiguration(configFilename):
-    body = {}
-    config = loadJsonConfig(configFilename)
-    motorsConfig = config.motors
-
-    adc = configADC()
-
-    if motorsConfig.servos:
-        kit = configPWMBoard(config)
-        servos = configServos(motorsConfig.servos, kit, adc)
-        body = addServosToBody(body, servos)
-
-    if motorsConfig.dc_motors:
-        motors = configDCMotors(motorsConfig.dc_motors)
-        body = addDCsToBody(body, motors)
-
-    if motorsConfig.uart_servos:
-        uartServos = configUartServos(config.uart_board, motorsConfig.uart_servos, adc)
-        body = addUartsToBody(body, uartServos)
-
-    body = dictToDns(body)
-    return body
-
 
 def addServosToBody(body, servos):
     for servo in servos:
