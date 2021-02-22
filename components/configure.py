@@ -2,11 +2,13 @@ from types import SimpleNamespace
 import json
 
 import Adafruit_ADS1x15
+import serial
 from adafruit_servokit import ServoKit
 
 from components.Potentiometer import Potentiometer
 from components.ServoMotor import ServoMotor
 from components.DcMotor import DcMotor
+from components.UartServo import UartServo
 
 
 def configPWMBoard(config):
@@ -60,22 +62,56 @@ def configDCMotors(dc_motors):
     return motors
 
 
+def createSerial(serialConfig):
+    return serial.Serial(
+        port=serialConfig.port,
+        baudrate=serialConfig.baudrate,
+    )
+
+
+def configUartServos(uartBoardConfig, servos, adc):
+    serialCom = createSerial(uartBoardConfig)
+    servosReturn = []
+    for servo in servos:
+        potConfig = servo.potentiometer
+        potentiometer = Potentiometer(potConfig.pin, potConfig.min_val, potConfig.max_val, potConfig.gain, adc)
+        uartServo = UartServo(servo.id,
+                              servo.name,
+                              servo.speed,
+                              servo.command_prefix,
+                              servo.command_template,
+                              servo.command_suffix,
+                              serialCom,
+                              potentiometer)
+        servosReturn.append(uartServo)
+    return servosReturn
+
+
 def performConfiguration(configFilename):
     body = {}
     config = loadJsonConfig(configFilename)
     motorsConfig = config.motors
-    kit = configPWMBoard(config)
+
     adc = configADC()
-    servos = configServos(motorsConfig.servos, kit, adc)
-    motors = configDCMotors(motorsConfig.dc_motors)
-    body = addServosToBody(body, servos)
-    body = addDCsToBody(body, motors)
+
+    if motorsConfig.servos:
+        kit = configPWMBoard(config)
+        servos = configServos(motorsConfig.servos, kit, adc)
+        body = addServosToBody(body, servos)
+
+    if motorsConfig.dc_motors:
+        motors = configDCMotors(motorsConfig.dc_motors)
+        body = addDCsToBody(body, motors)
+
+    if motorsConfig.uart_servos:
+        uartServos = configUartServos(config.uart_board, motorsConfig.uart_servos, adc)
+        body = addUartsToBody(body, uartServos)
+
     body = dictToDns(body)
     return body
 
 
 def addServosToBody(body, servos):
-    print(servos)
     for servo in servos:
         body[servo.name] = servos[servo.pin]
     return body
@@ -84,4 +120,10 @@ def addServosToBody(body, servos):
 def addDCsToBody(body, DCs):
     for motor in DCs:
         body[motor.name] = motor
+    return body
+
+
+def addUartsToBody(body, uarts):
+    for uart in uarts:
+        body[uart.name] = uart
     return body

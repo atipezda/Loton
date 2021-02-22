@@ -1,28 +1,33 @@
 {
   "motors": {
     "servos": [
+    ],
+    "dc_motors": [
+    ],
+    "uart_servos": [
       {
+        "id": "01",
         "name": "feet",
-        "pin": 0,
-        "is_360": true,
-        "pulse_min": 900,
-        "pulse_max": 2000,
-        "max_angle": 360,
-        "speed": 0.3,
+        "speed": 1000,
+        "command_prefix": "ff ff",
+        "command_template": "$id 09 03 2a $position 00 00 $speed",
+        "command_suffix": "$sum",
         "potentiometer": {
-          "pin": 0,
+          "pin": 3,
           "min_val": 7360,
           "max_val": 26176,
           "gain": "2/3"
         }
       }
-    ],
-    "dc_motors": [
     ]
   },
   "pwm_board": {
     "address": 64,
     "channels": 16,
     "frequency": 330
+  },
+  "uart_board": {
+    "port": "/dev/ttyAMA0",
+    "baudrate": 115200
   }
 }

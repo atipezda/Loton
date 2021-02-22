@@ -46,6 +46,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
+    'nuxt-socket-io'
   ],
   proxy: {
     '/api': {
@@ -54,6 +55,13 @@ export default {
         '^/api' : '/'
         }
       },
+  },
+  io: {
+    // module options
+    sockets: [{
+      name: 'main',
+      url: 'http://raspberrypi.local:5000'
+    }]
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
