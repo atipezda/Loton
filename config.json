@@ -12,6 +12,7 @@
         "command_prefix": "ff ff",
         "command_template": "$id 09 03 2a $position 00 00 $speed",
         "command_suffix": "$sum",
+        "max_angle": 360,
         "potentiometer": {
           "pin": 3,
           "min_val": 7360,
