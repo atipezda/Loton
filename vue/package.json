@@ -9,6 +9,7 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
+    "@chenfengyuan/vue-number-input": "^1.2.1",
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/proxy": "^2.1.0",
@@ -31,12 +32,14 @@
     "vue-p5-component": "^1.0.4",
     "vue-socket.io": "^3.0.10",
     "vue-svg-gauge": "^1.2.1",
-    "vue-threejs": "^0.2.0-alpha.1"
+    "vue-threejs": "^0.2.0-alpha.1",
+    "vuedraggable": "^2.24.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
     "@nuxt/typescript-build": "^2.0.4",
     "@nuxtjs/style-resources": "^1.0.0",
+    "@types/socket.io-client": "^1.4.35",
     "fibers": "^5.0.0",
     "sass": "^1.32.6",
     "sass-loader": "^10.1.1"

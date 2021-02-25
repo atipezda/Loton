@@ -7,7 +7,11 @@
         <b-card-text class="icon-card-text">
           {{text}}
         </b-card-text>
-        <b-btn variant="primary" class="icon-card-button" @click="emitButton">{{buttonText}}</b-btn>
+        <NuxtLink :to="href" v-if="href">
+          <b-btn variant="primary" class="icon-card-button">{{buttonText}}</b-btn>
+        </NuxtLink>
+          <b-btn v-else variant="primary" class="icon-card-button" @click="emitButton">{{buttonText}}</b-btn>
+
       </b-card-body>
 <!--      <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>-->
     </b-card>
@@ -23,6 +27,7 @@ export interface IconCardInterface{
   text:string;
   buttonText:string;
   iconName:string;
+  href?: string
 }
 
 @Component
@@ -30,6 +35,7 @@ export default class IconCard extends Vue {
   @Prop({required: true})readonly  title!:string
   @Prop({required: true})readonly  text!:string
   @Prop({required: true})readonly  buttonText!:string
+  @Prop({required: false})readonly  href!:string
   @Prop({required: true, default: ()=>''})readonly  iconName!:string
 
   emitButton():void{

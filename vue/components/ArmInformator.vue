@@ -1,11 +1,11 @@
 <template>
-  <b-container class="armInformator">
+  <div class="armInformator">
     <GaugeGraph :value="value"/>
-    <h1 class="text">{{value}}<i>%</i></h1>
+    <h1 class="text">{{ value }}<i>%</i></h1>
     <div class="extra-dot">
       <img :src="icon">
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,12 +17,15 @@ import {
   Vue,
 } from "nuxt-property-decorator"
 //@ts-ignore
-import { Gauge } from 'gaugeJS'
+import {Gauge} from 'gaugeJS'
 import {getAsset} from "~/helpers/assetHelper";
 
-export interface ArmInformatorInterface{
-  value: number,
-  iconName: string
+export interface ArmInformatorInterface {
+  id: number;
+  value: number;
+  name: string;
+  iconName: string;
+  isSwitch?: boolean
 }
 
 @Component({
@@ -31,13 +34,25 @@ export interface ArmInformatorInterface{
   }
 })
 export default class ArmInformator extends Vue {
-  @Prop({default: ()=>0}) readonly value!: number
-  @Prop({default: ()=>''}) readonly iconName!: string
+  @Prop({default: () => 0}) readonly value!: number
+  @Prop({default: () => ''}) readonly iconName!: string
 
 
-  get icon():string{
+  get icon(): string {
     return getAsset(this.iconName)
   }
+
+  mounted(): void {
+    this.socket = this.$nuxtSocket({
+      name: 'main',
+      channel: '/positions'
+    })
+    this.socket
+      .on('move', (servo: ServoInfo) => {
+        this.$store.commit('updatePosition', {name: servo.name, value: servo.value})
+      })
+  }
+
 
 }
 </script>
@@ -67,7 +82,8 @@ export default class ArmInformator extends Vue {
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+
+    img {
       width: 70%;
       border-radius: 30%;
     }
@@ -81,7 +97,8 @@ export default class ArmInformator extends Vue {
     color: $primary;
     font-weight: 300;
     font-size: 1em;
-    i{
+
+    i {
       font-size: 0.7em;
     }
   }

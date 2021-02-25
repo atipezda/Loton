@@ -1,5 +1,5 @@
 <template>
-    <canvas class="gauge" ref="gaugeCanvas"/>
+  <canvas class="gauge" ref="gaugeCanvas"/>
 </template>
 
 <script lang="ts">
@@ -12,29 +12,32 @@ import {
   Watch
 } from "nuxt-property-decorator"
 //@ts-ignore
-import { Gauge } from 'gaugeJS'
+import {Gauge} from 'gaugeJS'
 
 @Component({
   components: {
     VueSvgGauge,
   }
 })
-export default class ArmInformator extends Vue {
-  @Prop({default: ()=>0}) readonly value!:number
+export default class GaugeGraph extends Vue {
+  @Prop({default: () => 0}) readonly value!: number
   private gauge: Gauge
 
-  mounted(){
-    const target = this.$refs["gaugeCanvas"] ;
+  mounted() {
+    const target = this.$refs["gaugeCanvas"];
     this.gauge = new Gauge(target).setOptions(this.gaugeConfig);
+    console.log(this.gauge)
     this.gauge.maxValue = 100; // set max gauge value
     this.gauge.setMinValue(0);  // set min value
     this.gauge.set(this.value);
   }
 
-  @Watch('person')
-  onValueChanged(newVal: number,oldVal:number):void{
-    if(newVal === oldVal) return;
-    this.gauge.set(newVal);
+  @Watch('value')
+  onValueChanged(newVal: number, oldVal: number): void {
+    if (newVal === oldVal) return;
+    window.requestAnimationFrame(() => {
+      this.gauge.set(newVal);
+    })
   }
 
   gaugeConfig = {
@@ -49,7 +52,7 @@ export default class ArmInformator extends Vue {
       "subColor": "#666666",
       "subWidth": 0.1
     },
-    "animationSpeed": 121,
+    "animationSpeed": 1,
     "angle": -0.15,
     "lineWidth": 0.09,
     "radiusScale": 0.8,
@@ -71,8 +74,8 @@ export default class ArmInformator extends Vue {
 
 <style lang="scss" scoped>
 
-  .gauge{
-    margin-bottom: 20%;
-  }
+.gauge {
+  margin-bottom: 20%;
+}
 
 </style>

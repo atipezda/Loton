@@ -1,6 +1,6 @@
 <template>
   <b-container class="model-viewer">
-    <P5 v-on="{preload, setup, draw}"/>
+    <P5 v-if="isVisible" v-on="{preload, setup, draw}"/>
   </b-container>
 </template>
 
@@ -21,14 +21,27 @@ import {getAsset} from "~/helpers/assetHelper";
 })
 export default class ModelViewer extends Vue {
   model!: P5Geometry
+  isVisible: boolean = true
+
+  mounted(): void {
+    window.onresize = () => {
+      this.reload()
+    }
+  }
+
+  reload(): void {
+    this.isVisible = false
+    setTimeout(() => {
+      this.isVisible = true
+    }, 200)
+  }
 
   preload(sketch: P5Sketch) {
     this.model = sketch.loadModel('/ocean.obj');
   }
 
   setup(sketch: P5Sketch) {
-    const element:any = document.getElementsByClassName('model-viewer')[0];
-
+    const element: any = document.getElementsByClassName('model-viewer')[0];
     sketch.createCanvas(element.offsetWidth, element.offsetHeight, sketch.WEBGL);
   }
 

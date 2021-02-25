@@ -1,3 +1,4 @@
+/** @type {import('nuxt-socket-io/io/types').NuxtSocketIoOptions} */
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
