@@ -13,38 +13,38 @@ const stateObject: StateObjectInterface = {
       id: 1,
       name: 'finger',
       iconName: 'arm.jpg',
-      value: 20,
+      value: 0,
       isSwitch: true
     },
     {
       id: 2,
       name: 'wrist',
       iconName: 'arm.jpg',
-      value: 80,
+      value: 0,
     },
     {
       id: 3,
       name: 'hand',
       iconName: 'arm.jpg',
-      value: 45,
+      value: 0,
     },
     {
       id: 4,
       name: 'arm',
       iconName: 'arm.jpg',
-      value: 10,
+      value: 0,
     },
     {
       id: 5,
       name: 'leg',
       iconName: 'arm.jpg',
-      value: 95,
+      value: 0,
     },
     {
       id: 6,
       name: 'feet',
       iconName: 'arm.jpg',
-      value: 55,
+      value: 0,
     }
   ]
 }
@@ -54,7 +54,7 @@ export const state = () => (stateObject)
 export const mutations = {
   updatePosition(state: StateObjectInterface, {name, value}: ArmInformatorInterface) {
     state.positions = state.positions.map((pos: ArmInformatorInterface) => {
-      if (pos.name === name) {
+      if (pos.name === name){
         pos.value = value
       }
       return pos

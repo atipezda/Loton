@@ -58,4 +58,7 @@ def calcLength(command):
     bitAnd = bitand(decSum, 255)
     bitXor = bitXOr(bitAnd, 255)
     toHex = decToHex(bitXor)
+
+    if len(toHex) < 2:
+        return F"0{toHex}"
     return toHex

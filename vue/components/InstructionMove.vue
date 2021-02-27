@@ -15,7 +15,6 @@
 import {Component, Prop, Vue} from "nuxt-property-decorator"
 import MoveIcon from "~/components/icons/MoveIcon.vue";
 import InstructionElement from "~/components/InstructionElement.vue";
-import VueNumberInput from '@chenfengyuan/vue-number-input';
 import PositionViewer from "~/components/PositionViewer.vue";
 import {ArmInformatorInterface} from "~/components/ArmInformator.vue";
 

@@ -1,23 +1,96 @@
 {
   "motors": {
     "servos": [
+     {
+        "name": "feet",
+        "pin": 3,
+        "is_360": true,
+        "pulse_min": 895,
+        "pulse_max": 2000,
+        "max_angle": 360,
+        "speed": 0.3,
+        "potentiometer": {
+          "adc": 0,
+          "pin": 0,
+          "min_val": 7904,
+          "max_val": 16824,
+          "gain": 0.6666666666666666
+        }
+      },
+      {
+        "name": "arm",
+        "pin": 7,
+        "is_360": false,
+        "pulse_min": 900,
+        "pulse_max": 2000,
+        "max_angle": 180,
+        "speed": 1000,
+        "potentiometer": {
+          "adc": 0,
+          "pin": 2,
+          "min_val": 7360,
+          "max_val": 26176,
+          "gain": 0.6666666666666666
+        }
+      },
+      {
+        "name": "hand",
+        "pin": 11,
+        "is_360": false,
+        "pulse_min": 900,
+        "pulse_max": 2000,
+        "max_angle": 270,
+        "speed": 1000,
+        "potentiometer": {
+          "adc": 0,
+          "pin": 3,
+          "min_val": 49,
+          "max_val": 1856,
+          "gain": 0.6666666666666666
+        }
+      },
+      {
+        "name": "wrist",
+        "pin": 15,
+        "is_360": true,
+        "pulse_min": 900,
+        "pulse_max": 2000,
+        "max_angle": 270,
+        "speed": 0.3,
+        "potentiometer": {
+          "adc": 1,
+          "pin": 0,
+          "min_val": 11456,
+          "max_val": 19968,
+          "gain": 0.6666666666666666
+        }
+      }
     ],
     "dc_motors": [
+      {
+        "name": "finger",
+        "pin_forward": 17,
+        "pin_backward": 27,
+        "forward_duration": 1.5,
+        "backward_duration": 2.5,
+        "initial": "forward"
+      }
     ],
     "uart_servos": [
       {
         "id": "01",
-        "name": "feet",
+        "name": "leg",
         "speed": 1000,
         "command_prefix": "ff ff",
         "command_template": "$id 09 03 2a $position 00 00 $speed",
         "command_suffix": "$sum",
         "max_angle": 360,
         "potentiometer": {
-          "pin": 3,
-          "min_val": 7360,
-          "max_val": 26176,
-          "gain": "2/3"
+          "adc": 0,
+          "pin": 1,
+          "min_val": 7300,
+          "max_val": 8730,
+          "gain": 0.6666666666666666
         }
       }
     ]
@@ -30,5 +103,15 @@
   "uart_board": {
     "port": "/dev/ttyAMA0",
     "baudrate": 115200
-  }
+  },
+  "adcConverters": [
+    {
+      "id": 0,
+      "address": 72
+    },
+    {
+      "id": 1,
+      "address": 75
+    }
+  ]
 }

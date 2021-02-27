@@ -3,15 +3,15 @@ from helpers.hexHelper import calcLength, encodeDec
 
 
 class UartServo:
-    def __init__(self, id, name, speed, comPref, com, comSuff, serial, potentiometer):
+    def __init__(self, id, name, speed, maxAngle, comPref, com, comSuff, serial):
         self.id = id
         self.name = name
         self.speed = speed
+        self.maxAngle = maxAngle
         self.comPref = comPref
         self.com = com
         self.comSuff = comSuff
         self.serial = serial
-        self.potentiometer = potentiometer
 
     def writeHex(self, hexString):
         command = bytes.fromhex(hexString)

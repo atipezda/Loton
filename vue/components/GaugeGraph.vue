@@ -35,9 +35,7 @@ export default class GaugeGraph extends Vue {
   @Watch('value')
   onValueChanged(newVal: number, oldVal: number): void {
     if (newVal === oldVal) return;
-    window.requestAnimationFrame(() => {
       this.gauge.set(newVal);
-    })
   }
 
   gaugeConfig = {
