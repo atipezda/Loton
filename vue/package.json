@@ -9,6 +9,7 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
+    "@blokwise/dynamic": "^1.2.0",
     "@chenfengyuan/vue-number-input": "^1.2.1",
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
@@ -30,6 +31,7 @@
     "vgauge": "^1.2.12-rc3",
     "vue": "^2.6.12",
     "vue-p5-component": "^1.0.4",
+    "vue-slider-component": "^4.0.0-beta.3",
     "vue-socket.io": "^3.0.10",
     "vue-svg-gauge": "^1.2.1",
     "vue-threejs": "^0.2.0-alpha.1",

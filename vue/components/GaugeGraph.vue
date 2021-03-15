@@ -38,7 +38,7 @@ export default class GaugeGraph extends Vue {
       this.gauge.set(newVal);
   }
 
-  gaugeConfig = {
+  gaugeConfig: any = {
     "renderTicks": {
       "": null,
       "divisions": 9,

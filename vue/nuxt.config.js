@@ -6,6 +6,10 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  server: {
+    host: '0.0.0.0'
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'loton_vue',
@@ -42,6 +46,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
+    '@blokwise/dynamic',
     '@nuxtjs/proxy',
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios

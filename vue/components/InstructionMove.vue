@@ -1,11 +1,15 @@
 <template>
-  <InstructionElement>
+  <InstructionElement @delete="$emit('delete', id)">
     <template v-slot:title>
       <MoveIcon/>
     </template>
     <template v-slot:body>
       <div class="positions">
-        <PositionViewer v-for="position in positions" :value="position.value" :reverted="isOdd(position.id)" :switchable="position.isSwitch"/>
+        <template v-for="position in val">
+          <div class="position-wrapper">
+            <PositionViewer :value="position.percent" :reverted="isOdd(position.id)" :switchable="position.isSwitch"/>
+          </div>
+        </template>
       </div>
     </template>
   </InstructionElement>
@@ -19,14 +23,11 @@ import PositionViewer from "~/components/PositionViewer.vue";
 import {ArmInformatorInterface} from "~/components/ArmInformator.vue";
 
 @Component({
-  components: {PositionViewer, InstructionElement, MoveIcon, VueNumberInput}
+  components: {PositionViewer, InstructionElement, MoveIcon}
 })
 export default class InstructionMove extends Vue {
-  @Prop() val!: number | string
-
-  get positions(): ArmInformatorInterface[]{
-    return this.$store.state.positions
-  }
+  @Prop() val!: ArmInformatorInterface[]
+  @Prop() id: number
 
   isOdd(num: number):boolean{
     return num%2===0
@@ -42,7 +43,12 @@ export default class InstructionMove extends Vue {
   flex-wrap: wrap;
   justify-content: center;
   ::v-deep .position-viewer{
-    margin: 0 5%;
+    margin: auto;
+    width: fit-content;
+  }
+  .position-wrapper{
+    flex: 50%;
+    position: relative;
   }
 }
 </style>

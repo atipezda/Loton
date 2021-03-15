@@ -1,27 +1,35 @@
 <template>
   <div class="positions-widget">
-    <ArmInformator v-for="pos in positions" v-bind="pos"/>
+    <ArmInformator v-for="pos in positions" :mode="mode" v-bind="pos"/>
   </div>
 </template>
 
 <script lang="ts">
-import {Component,Vue} from "nuxt-property-decorator"
+import {Component, Vue} from "nuxt-property-decorator"
 import ArmInformator, {ArmInformatorInterface} from "~/components/ArmInformator.vue";
+import DualStateToggle from "~/components/DualStateToggle.vue";
+import {StateObjectInterface} from "~/store";
 
 @Component({
   components: {
+    DualStateToggle,
     ArmInformator
   }
 })
 export default class PositionsWidget extends Vue {
   private socket: any;
 
-  get positions(){
+  get mode(): StateObjectInterface['viewMode'] {
+    return this.$store.state.viewMode
+  }
+
+  get positions() {
     const pos = this.$store.state.positions
     return pos
   }
-  async mounted(): Promise<void> {
 
+
+  async mounted(): Promise<void> {
     this.socket = this.$nuxtSocket({
       transports: ['websocket', 'polling', 'flashsocket'],
       name: 'main',
@@ -30,7 +38,7 @@ export default class PositionsWidget extends Vue {
     })
     this.socket
       .on('servoMove', (servo: any) => {
-        this.updateServo(servo.name, servo.value)
+        this.updateServo(servo.name, servo.percent, servo.angle)
       })
     this.socket.on('disconnect', function() {
       console.log('Socket disconnected');
@@ -40,9 +48,8 @@ export default class PositionsWidget extends Vue {
     });
   }
 
-  updateServo(name: string, value: number): void {
-    console.log(name,value)
-    this.$store.commit('updatePosition', {name,value})
+  updateServo(name: string, percent: number, angle: number): void {
+    this.$store.commit('updatePosition', {name, percent, angle})
   }
 }
 </script>
@@ -52,6 +59,7 @@ export default class PositionsWidget extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
+  height: 100%;
 }
 </style>

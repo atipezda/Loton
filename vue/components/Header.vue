@@ -1,6 +1,6 @@
 <template>
   <header class="nav-header">
-    <img src="@/assets/logo.png">
+    <img class="logo" src="@/assets/logo.png">
     <b-button class="logout" variant="danger">Wyloguj</b-button>
   </header>
 </template>

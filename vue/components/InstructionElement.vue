@@ -9,7 +9,7 @@
         <b-button variant="primary">
           <DownIcon size="15"/>
         </b-button>
-        <b-button variant="danger">X</b-button>
+        <b-button variant="danger" @click="$emit('delete')">X</b-button>
       </div>
     </b-card-title>
     <b-card-body v-if="$slots.body" class="instruction-element-body">

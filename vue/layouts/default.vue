@@ -4,7 +4,12 @@
     <div class="tilesWrapper">
       <b-row class="main-row">
         <b-col lg="4" class="statuses">
-          <PositionsWidget/>
+          <div class="option-controller-wrapper">
+            <RobotOptionController/>
+          </div>
+          <b-collapse :visible="arePositionsVisible" id="collapse-statuses">
+            <PositionsWidget/>
+          </b-collapse>
         </b-col>
         <b-col>
           <Nuxt/>
@@ -22,9 +27,12 @@ import ArmInformator, {ArmInformatorInterface} from "~/components/ArmInformator.
 import Header from '~/components/Header.vue'
 import PositionsWidget from '~/components/PositionsWidget.vue'
 import {Socket} from "socket.io";
+import RobotOptionController from "~/components/RobotOptionController.vue";
+import {StateObjectInterface} from "~/store";
 
 @Component({
   components: {
+    RobotOptionController,
     ArmInformator,
     PositionsWidget,
     Header
@@ -32,7 +40,9 @@ import {Socket} from "socket.io";
 })
 export default class Default extends Vue {
 
-
+  get arePositionsVisible(): boolean {
+   return (this.$store.state as StateObjectInterface).isArmInformatorVisible
+  }
 }
 </script>
 
@@ -59,8 +69,11 @@ html {
   display: flex;
 
   .logo {
-    margin-left: auto;
-    margin-right: 0;
+    margin: 0 auto;
+    @include media-breakpoint-up(md) {
+      margin-left: 0;
+      margin-right: auto;
+    }
   }
 
   .logout {
@@ -73,28 +86,65 @@ html {
   }
 }
 
+.option-controller-wrapper {
+  width: 85%;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 5px;
+  height: fit-content;
+}
+
+
+@keyframes moveBG {
+  0% {
+    background-position: 0 10%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 20%;
+  }
+}
+
 .main {
-  background: linear-gradient(to left, #ad2969 0%, #654ea3 100%);
+  background: linear-gradient(30deg, #ad2969 0%, #654ea3 25%, #ad2969 50%, #654ea3 75%, #ad2969 100%);
   min-height: 100vh;
   width: 100vw;
   padding: 0 10px;
   margin: 0;
-}
+  animation: moveBG 20s infinite;
+  background-size: 400% 400%;
 
-.statuses {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 0;
-  margin-bottom: 10%;
-  display: none;
-  @include media-breakpoint-up(sm){
+  .position-toggle {
+    width: 100%;
+    display: flex;
+
+    .btn {
+      margin: 0 auto;
+    }
+
+  }
+
+  .statuses {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin-bottom: 5%;
     display: flex;
   }
-}
 
-.tilesWrapper {
-  padding: 0 0;
+  .tilesWrapper {
+    padding: 0 0;
+  }
+}
+hr {
+  width: 50%;
+  background-color: #fff;
+  height: 2px;
+  border: none;
+  margin: 5% auto;
 }
 
 *,

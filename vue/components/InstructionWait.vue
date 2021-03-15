@@ -1,8 +1,8 @@
 <template>
-  <InstructionElement>
+  <InstructionElement @delete="$emit('delete', id)">
     <template v-slot:title>
       <TimeIcon/>
-      <p>10</p>
+      <p>{{val}}s</p>
     </template>
   </InstructionElement>
 </template>
@@ -19,6 +19,7 @@ import VueNumberInput from '@chenfengyuan/vue-number-input';
 })
 export default class InstructionWait extends Vue {
   @Prop() val: number | string
+  @Prop() id: number
 
   currentValue: number = 0
 }

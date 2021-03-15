@@ -1,14 +1,9 @@
 <template>
-    <b-row class="index-main">
-      <b-col lg="7" class="model-viewer-wrapper">
-        <ModelViewer/>
-      </b-col>
-      <b-col class="card-list" lg="5">
-        <b-container>
-          <IconCard v-for="card in cards" v-bind="card"/>
-        </b-container>
-      </b-col>
-    </b-row>
+  <b-row class="controller-main">
+    <b-col lg="7">
+      <RemoteController/>
+    </b-col>
+  </b-row>
 </template>
 
 <script lang="ts">
@@ -22,16 +17,18 @@ import {ArmInformatorInterface} from "~/components/ArmInformator.vue";
 import ArmInformator from "~/components/ArmInformator.vue";
 import {io} from 'socket.io-client';
 import ModelViewer from "~/components/ModelViewer.vue";
+import RemoteController from "~/components/RemoteController.vue";
 
 
 @Component({
   components: {
+    RemoteController,
     ArmInformator,
     ModelViewer,
     IconCard
   }
 })
-export default class Index extends Vue {
+export default class Controller extends Vue {
   cards: IconCardInterface[] = [
     {
       buttonText: 'Macro',
@@ -51,23 +48,9 @@ export default class Index extends Vue {
 </script>
 
 <style lang="scss">
-.index-main{
-  height: 90%;
+.controller-main{
+  width: 90%;
+  margin: 0 auto;
 }
-
-.model-viewer-wrapper{
-  display: none;
-  @include media-breakpoint-up(lg) {
-    display: flex;
-  }
-}
-
-.main-row {
-
-}
-
-//.card-list{
-//  margin-right: 5px;
-//}
 
 </style>
