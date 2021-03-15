@@ -121,6 +121,7 @@ def configUartServos(uartBoardConfig, servos, adcs, ee):
             servo.name,
             servo.speed,
             servo.max_angle,
+            servo.start_angle,
             servo.command_prefix,
             servo.command_template,
             servo.command_suffix,

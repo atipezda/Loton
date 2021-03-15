@@ -14,17 +14,6 @@ from pymitter import EventEmitter
 from components.configure import loadJsonConfig
 
 
-def testFunction(part, io):
-    previousPercent = 0
-    while True:
-        potential = part.pot.readRawValue()
-        angle = part.potentialToAngle(potential)
-        percent = part.angleToPercent(angle)
-        if previousPercent != percent:
-            part.ee.emit('move', part.name, angle, percent)
-            previousPercent = percent
-        io.sleep(0.3)
-
 
 ee = EventEmitter()
 if __name__ == '__main__':
@@ -36,20 +25,6 @@ if __name__ == '__main__':
     LotonController = RobotController(config, ee)
     LotonServer.configSocket(socketio)
     LotonServer.configEmitter(ee)
-    # for key in LotonController.body:
-    #     # LotonController.body[key].startListening(socketio.start_background_task)
-    #     # arm = LotonController.body[key]
-    #     # socketio.start_background_task(testFunction,arm,socketio)
     LotonController.setupEmitters(socketio.start_background_task, socketio.sleep)
-
-    LotonController.body['feet'].move(0)
-    time.sleep(5)
-    LotonController.body['feet'].move(90)
-    time.sleep(5)
-    LotonController.body['feet'].move(180)
-    time.sleep(5)
-    LotonController.body['feet'].move(360)
-
-
     print('socketIo start')
     socketio.run(LotonServer.app, host='0.0.0.0', debug=True)

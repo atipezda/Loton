@@ -1,6 +1,7 @@
 import time
 
 from components.SmartServo import SmartServo
+from helpers.dataHelper import mapValueToIntRange
 
 
 class SmartContinuousServo(SmartServo):
@@ -15,13 +16,19 @@ class SmartContinuousServo(SmartServo):
         while not done:
             wishedToSet = self.angleToPotential(angle)
             currentVal = self.pot.readRawValue()
-            print(F"to set:{wishedToSet} current: {currentVal}")
+            currentAngle = self.potentialToAngle(currentVal)
+            print(F"to set:{angle}* current: {currentAngle}*")
+            # print(F"to set:{wishedToSet} current: {currentVal}")
 
             if abs(currentVal - wishedToSet) < 20:
                 self.move360Servo('stop', 0)
                 done = True
+                return
 
-            if abs(currentVal - wishedToSet) < 800:
+            angleDifference = abs(currentAngle - angle)
+            if angleDifference < 100:
+                newSpeed = mapValueToIntRange(angleDifference,0,100,1,100)
+                print('slowing down', newSpeed)
                 speed = 0.1
 
             if currentVal > wishedToSet:
@@ -33,6 +40,7 @@ class SmartContinuousServo(SmartServo):
             else:
                 self.move360Servo('stop', 0)
                 done = True
+            time.sleep(0.05)
 
     def move360Servo(self, direction, speed):
         print(direction)

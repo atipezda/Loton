@@ -5,15 +5,15 @@
         "name": "feet",
         "pin": 3,
         "is_360": true,
-        "pulse_min": 895,
+        "pulse_min": 900,
         "pulse_max": 2000,
         "max_angle": 360,
         "speed": 0.3,
         "potentiometer": {
           "adc": 0,
           "pin": 0,
-          "min_val": 7904,
-          "max_val": 16824,
+          "min_val": 5024,
+          "max_val": 13232,
           "gain": 0.6666666666666666
         }
       },
@@ -22,7 +22,7 @@
         "pin": 7,
         "is_360": false,
         "pulse_min": 900,
-        "pulse_max": 2000,
+        "pulse_max": 2350,
         "max_angle": 180,
         "speed": 1000,
         "potentiometer": {
@@ -37,8 +37,8 @@
         "name": "hand",
         "pin": 11,
         "is_360": false,
-        "pulse_min": 900,
-        "pulse_max": 2000,
+        "pulse_min": 560,
+        "pulse_max": 2250,
         "max_angle": 270,
         "speed": 1000,
         "potentiometer": {
@@ -84,7 +84,8 @@
         "command_prefix": "ff ff",
         "command_template": "$id 09 03 2a $position 00 00 $speed",
         "command_suffix": "$sum",
-        "max_angle": 360,
+        "max_angle": 180,
+        "start_angle": 160,
         "potentiometer": {
           "adc": 0,
           "pin": 1,
@@ -101,7 +102,7 @@
     "frequency": 330
   },
   "uart_board": {
-    "port": "/dev/ttyAMA0",
+    "port": "/dev/ttyS0",
     "baudrate": 115200
   },
   "adcConverters": [

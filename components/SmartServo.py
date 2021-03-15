@@ -23,7 +23,7 @@ class SmartServo(Servo):
     def angleToPercent(self, angle):
         return mapValueToIntRange(angle, 0, self.max_angle, 0, 100)
 
-    def _listen(self, asyncSleepProvider, sleepInterval=0.3):
+    def _listen(self, asyncSleepProvider, sleepInterval=1):
         previousPercent = 0
         while True:
             potential = self.pot.readRawValue()

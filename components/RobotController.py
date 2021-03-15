@@ -11,6 +11,7 @@ class RobotController:
         self.body = None
         self.ee = ee
         self.configure()
+        self.setupListeners()
 
     def createBody(self):
         body = {}
@@ -42,6 +43,13 @@ class RobotController:
             elem = self.body[key]
             if hasattr(elem, 'pot'):
                 threadProvider(elem._listen, sleepProvider)
+
+    def setPosition(self, part, position):
+        print('setting part')
+        self.body[part].move(int(position))
+
+    def setupListeners(self):
+        self.ee.on("set", self.setPosition)
 
     def moveRobot(self, positions):
         pass

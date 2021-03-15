@@ -8,3 +8,10 @@ def mapValueToIntRange(value, leftMin, leftMax, rightRangeMin, rightRangeMax):
 
     # Convert the 0-1 range into a value in the right range.
     return int(rightRangeMin + (valueScaled * rightSpan))
+
+
+def spaceTheString(msg, lengthToSet):
+    checkedMsg = str(msg)
+    if len(checkedMsg) < lengthToSet:
+        checkedMsg += " " * (lengthToSet - len(checkedMsg))
+    return checkedMsg

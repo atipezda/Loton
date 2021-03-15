@@ -3,11 +3,12 @@ from helpers.hexHelper import calcLength, encodeDec
 
 
 class UartServo:
-    def __init__(self, id, name, speed, maxAngle, comPref, com, comSuff, serial):
+    def __init__(self, id, name, speed, maxAngle, startAngle, comPref, com, comSuff, serial):
         self.id = id
         self.name = name
         self.speed = speed
         self.maxAngle = maxAngle
+        self.startAngle = startAngle
         self.comPref = comPref
         self.com = com
         self.comSuff = comSuff
@@ -32,15 +33,18 @@ class UartServo:
         return mapValueToIntRange(angle, 0, 360, 0, 4095)
 
     def move(self, angle):
-        position = self.getValueFromAngle(angle)
-        commandToSum = self.replaceCommand(self.com, position)
-        command = self.replaceCommand(F"{self.comPref} {self.com} {self.comSuff}", position)
-
-        comSum = calcLength(commandToSum)
-        command = command.replace("$sum", comSum)
+        if angle > self.maxAngle:
+            raise Exception('angle over max')
 
         if not self.serial.isOpen():
             raise Exception('Uart is not open')
+
+        angle += self.startAngle
+        position = self.getValueFromAngle(angle)
+        commandToSum = self.replaceCommand(self.com, position)
+        command = self.replaceCommand(F"{self.comPref} {self.com} {self.comSuff}", position)
+        comSum = calcLength(commandToSum)
+        command = command.replace("$sum", comSum)
 
         self.clearSerial()
         self.writeHex(command)

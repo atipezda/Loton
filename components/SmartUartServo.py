@@ -5,8 +5,8 @@ from helpers.dataHelper import mapValueToIntRange
 
 
 class SmartUartServo(UartServo):
-    def __init__(self, potentiometer, ee, iD, name, speed, maxAngle, comPref, com, comSuff, serial):
-        super().__init__(iD, name, speed, maxAngle, comPref, com, comSuff, serial)
+    def __init__(self, potentiometer, ee, iD, name, speed, maxAngle, startAngle, comPref, com, comSuff, serial):
+        super().__init__(iD, name, speed, maxAngle, startAngle, comPref, com, comSuff, serial)
         self.pot = potentiometer
         self.ee = ee
 
